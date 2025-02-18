@@ -54,3 +54,5 @@ function pstt_activation()
 <?php
 }
 add_action('wp_footer', 'pstt_activation');
+
+testfunction();
