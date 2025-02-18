@@ -80,6 +80,19 @@ function pstt_customize_register($wp_customize)
         'section'  => 'pstt_customizer_section',
         'settings' => 'pstt_icon_bg_color',
     )));
+    // Add a Setting for Background Color
+    $wp_customize->add_setting('pstt_icon_border', array(
+        'default'   => '2px', // Default color: Black
+
+    ));
+
+    // Add the Color Picker Control
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'pstt_icon_border_control', array(
+        'label'    => __('Icon border', 'pstt'),
+        'section'  => 'pstt_customizer_section',
+        'settings' => 'pstt_icon_border',
+        'type' => 'text'
+    )));
 }
 add_action('customize_register', 'pstt_customize_register');
 
@@ -87,22 +100,12 @@ add_action('customize_register', 'pstt_customize_register');
 function pstt_custom_css()
 {
 ?>
-    <style>
-        #scrollup {
-            background-color: <?php echo get_theme_mod('pstt_icon_bg_color'); ?>;
-        }
-    </style>
-
     <style type="text/css">
-        body {
-            background-color: #fff;
-        }
-
         a#scrollUp {
             background-color: <?php echo get_theme_mod('pstt_icon_bg_color'); ?>;
+            border-radius: <?php echo get_theme_mod('pstt_icon_border'); ?>;
         }
     </style>
-
 <?php
 }
 add_action('wp_footer', 'pstt_custom_css');
