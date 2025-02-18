@@ -56,3 +56,53 @@ function pstt_activation()
 <?php
 }
 add_action('wp_footer', 'pstt_activation');
+
+
+
+
+function pstt_customize_register($wp_customize)
+{
+    // Add a Section for Scroll-to-Top Settings
+    $wp_customize->add_section('pstt_customizer_section', array(
+        'title'    => __('Scroll-to-Top Settings', 'pstt'),
+        'priority' => 30,
+    ));
+
+    // Add a Setting for Background Color
+    $wp_customize->add_setting('pstt_icon_bg_color', array(
+        'default'   => '#000000', // Default color: Black
+        'sanitize_callback' => 'sanitize_hex_color', // Ensure valid HEX color
+    ));
+
+    // Add the Color Picker Control
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'pstt_icon_bg_color_control', array(
+        'label'    => __('Icon Background Color', 'pstt'),
+        'section'  => 'pstt_customizer_section',
+        'settings' => 'pstt_icon_bg_color',
+    )));
+}
+add_action('customize_register', 'pstt_customize_register');
+
+//theme css customization
+function pstt_custom_css()
+{
+?>
+    <style>
+        #scrollup {
+            background-color: <?php echo get_theme_mod('pstt_icon_bg_color'); ?>;
+        }
+    </style>
+
+    <style type="text/css">
+        body {
+            background-color: #fff;
+        }
+
+        a#scrollUp {
+            background-color: <?php echo get_theme_mod('pstt_icon_bg_color'); ?>;
+        }
+    </style>
+
+<?php
+}
+add_action('wp_footer', 'pstt_custom_css');
